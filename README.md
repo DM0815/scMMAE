@@ -1,7 +1,8 @@
 # scMMAE
 A cross-attention network based on masked autoencoder called single-cell multimodal masked autoencoder
 ![Image text](https://github.com/DM0815/scMMAE/blob/main/workflow.jpg)
-## prerequisite
+
+## Prerequisite
 * python 3.10.13
 * pytorch 2.1.0
 * scanpy
