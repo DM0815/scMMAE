@@ -1,6 +1,6 @@
 # scMMAE
 A cross-attention network based on masked autoencoder called single-cell multimodal masked autoencoder
-
+![Image text](https://github.com/DM0815/scMMAE/blob/main/framework.jpg)
 
 ## Prerequisite
 * python 3.10.13
@@ -14,3 +14,5 @@ config.omics_tokens = config.omics_genecomponent \* config.emb_gene, omics_token
 config.omics_tokens1 = config.omics_genecomponent1 \* config.emb_gene1, omics_tokens represents the protein number you used (I used all proteins), and config.emb_gene1 needs to be divisible by head numbers.
 ## Important
 The input data is two matrix (RNA: cell_numbers\*1\*gene_numbers, PROTEIN:cell_numbers\*1\*protein_numbers). In addition, input data should be normalized before running the model.
+## Example
+You can run tutorial.ipynb to reproduce the results for IFNB scRNA-seq dataset. Of note, due to the large size of the dataset, we have uploaded a zip archive inside the dataset folder, which you will need to extract to the current directory.
