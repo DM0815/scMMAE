@@ -9,7 +9,8 @@ A cross-attention network based on masked autoencoder called single-cell multimo
 * cudnn 8.9.2.26
 * scanpy 1.10.2
 * anndata 0.10.8
-* scikit-learn 1.5.1
+* scikit-learn 1.5.1 <br>
+
 The above packages are the main packages used for the experiment, most 2.0+ torch environments can run the experiment dircetly, just in case we have provided a requirement file for all packages.  
 
 ## Getting started
@@ -27,7 +28,8 @@ Install  packages
 ```cmd
 pip install -r requirements.txt
 ```
-Then you can run './scMMAE/code/tutorial.ipynb' to reproduce the results for IFNB scRNA-seq dataset. Of note, due to the large size of the dataset, we have uploaded a rar archive inside the dataset folder, which you will need to extract to the current directory.
+Then you can run './scMMAE/code/tutorial.ipynb' to reproduce the results for IFNB scRNA-seq dataset. Of note, due to the large size of the dataset, we have uploaded a rar archive inside the dataset folder, which you will need to extract to the current directory. <br>
+
 You can run './scMMAE/code/stage1.py', './scMMAE/code/stage2.py', and './scMMAE/code/stage3.py' directly as long as you unzip the dataset in the './scMMAE/dataset/CITE-seq/*.rar' ,and './scMMAE/dataset/RNA-seq/*.rar'.
 
 ## Checkpoint
