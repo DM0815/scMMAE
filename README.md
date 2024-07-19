@@ -1,13 +1,15 @@
 # scMMAE
 A cross-attention network based on masked autoencoder called single-cell multimodal masked autoencoder
-![Image text](https://github.com/DM0815/scMMAE/blob/main/framework.jpg)
+
 
 ## Prerequisite
 * python 3.10.13
-* pytorch 2.1.0
-* scanpy
-* anndata
-* sklearn
+* pytorch 2.3.1
+* cudnn 8.9.2.26
+* time 1.0.7
+* scanpy 1.10.2
+* anndata 0.10.8
+* scikit-learn 1.5.1
 ## Getting started
 If you want to use your own datasets in scMMAE, you should change six parameters: <br>
 config.omics_tokens = config.omics_genecomponent \* config.emb_gene, omics_tokens represents the gene number you used (I used 4000 highly variable genes), and config.emb_gene needs to be divisible by head numbers; <br>
