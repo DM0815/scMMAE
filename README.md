@@ -28,10 +28,8 @@ Install  packages
 ```cmd
 pip install -r requirements.txt
 ```
-Then you can run `./scMMAE/code/tutorial.ipynb` to reproduce the results for IFNB scRNA-seq dataset. Of note, due to the large size of the dataset, we have uploaded a rar archive inside the dataset folder, which you will need to extract to the current directory. <br>
-
-You can run `./scMMAE/code/stage1.py`, `./scMMAE/code/stage2.py`, and `./scMMAE/code/stage3.py` __directly__ as long as you unzip the dataset in the `./scMMAE/dataset/CITE-seq/*.rar` ,and `./scMMAE/dataset/RNA-seq/*.rar`.
-
-## Checkpoint
-If you need checkpoints for pre-training models and fine-tuning models for the dataset in the experiment, please contact [dmeng@gbu.edu.cn](mailto:dmeng@gbu.edu.cn)
+You can run `./scMMAE/code/stage1.py`,  and `./scMMAE/code/stage2.py` __directly__ as long as you unrar the dataset in the `./scMMAE/dataset/CITE-seq/*.rar` ,and `./scMMAE/dataset/RNA-seq/*.rar`.<br>
+Then you can run `./scMMAE/code/tutorial.ipynb` to reproduce the results for IFNB scRNA-seq dataset and you should ideally comment out the training code at these stages. Of note, due to the large size of the dataset, we have uploaded a rar archive inside the dataset folder, which you will need to extract to the current directory. 
+## Weighted Model
+If you need pretrained and fine-tuned model for the dataset in the experiment, please contact [dmeng@gbu.edu.cn](mailto:dmeng@gbu.edu.cn)
 
