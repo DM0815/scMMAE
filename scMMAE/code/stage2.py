@@ -181,6 +181,7 @@ class Omics_Classifier(torch.nn.Module):
     
 #### paired omics with label  Dataset
 from dataloaderwithlabel import *
+from dataloader import MultiModalDataset
 omic1 = torch.load('../dataset/CITE-seq/malt_10k_rna_rpkm.pth')
 omic2 = torch.load('../dataset/CITE-seq/malt_10k_prot_clred.pth')
 labels = np.load('../dataset/CITE-seq/malt10k_6838wnn_labels.npy',allow_pickle=True)
