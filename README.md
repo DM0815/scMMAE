@@ -11,7 +11,7 @@ A cross-attention network based on masked autoencoder called single-cell multimo
 * anndata 0.10.8
 * scikit-learn 1.5.1 <br>
 
-The above packages are the main packages used for the experiment, most 2.0+ torch environments can run the experiment dircetly, just in case we have provided a `./requirements.txt` file for all packages.  
+The above packages are the main packages used for the experiment, most 2.0+ torch environments can run the experiment directly, just in case we have provided a `./requirements.txt` file for all packages.  
 
 ## Getting started
 If you want to use your own datasets in scMMAE, you should change six parameters: <br>
