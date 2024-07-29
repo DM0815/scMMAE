@@ -48,7 +48,7 @@ class Config(object):
         self.warmup_epoch = 10
 config = Config()        
 
-class Omics_Encoder(torch.nn.Module):
+class RNA_Encoder(torch.nn.Module):
     def __init__(self,emb_dim=128,emb_RNA=10,RNA_component=400,RNA_tokens=4000, encoder_head=4,encoder_layer=6) -> None:
         super().__init__()
         self.tokens = torch.nn.Sequential(torch.nn.Linear(in_features = RNA_tokens, out_features = RNA_tokens))
@@ -101,7 +101,7 @@ class Omics_Pred(torch.nn.Module):
         self.RNA_Encoder = RNA_Encoder(config.emb_dim,config.emb_RNA,config.RNA_component,config.RNA_tokens,config.encoder_head,config.encoder_layer)
 
         
-        self.omics2_in_omics1_Att = CrossAttention(config.emb_dim)
+        self.ADT_in_RNA_Att = CrossAttention(config.emb_dim)
         self.fc = torch.nn.Linear(config.emb_dim, config.emb_dim)
         self.head = torch.nn.Linear(config.emb_dim, config.num_classes)
     def forward(self, patches1):
@@ -113,7 +113,7 @@ class Omics_Pred(torch.nn.Module):
  
         omics_feature2_cls = self.fc(omics_feature1_cls)
         
-        x1 = self.omics2_in_omics1_Att(omics_feature2_cls, omics_feature1_cls, omics_feature1_cls)##只用cls_token交互
+        x1 = self.ADT_in_RNA_Att(omics_feature2_cls, omics_feature1_cls, omics_feature1_cls)##只用cls_token交互
 
         x1 += omics_feature2_cls
 
