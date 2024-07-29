@@ -51,7 +51,7 @@ config = Config()
 
 
 ###Starting Stage2
-class RNA_Class_encoder(torch.nn.Module):
+class RNA_Encoder(torch.nn.Module):
     def __init__(self,emb_dim=64,emb_RNA=10,RNA_component=400,RNA_tokens=4000, encoder_head=4,encoder_layer=6) -> None:
         super().__init__()
         self.tokens = torch.nn.Sequential(torch.nn.Linear(in_features = RNA_tokens, out_features = RNA_tokens))
@@ -77,7 +77,7 @@ class RNA_Class_encoder(torch.nn.Module):
         
         return features
 
-class ADT_Class_encoder(torch.nn.Module):
+class ADT_Encoder(torch.nn.Module):
     def __init__(self,emb_dim=64,emb_ADT=10,ADT_component=400,ADT_tokens=4000, encoder_head=4,encoder_layer=6) -> None:
         super().__init__()
         self.tokens = torch.nn.Sequential(torch.nn.Linear(in_features = ADT_tokens, out_features = ADT_tokens))
@@ -132,8 +132,8 @@ class CrossAttention(torch.nn.Module):
 class Omics_Classifier(torch.nn.Module):
     def __init__(self, config) -> None:
         super().__init__()
-        self.RNA_encoder = RNA_Class_encoder(config.emb_dim,config.emb_RNA,config.RNA_component,config.RNA_tokens,config.encoder_head,config.encoder_layer)
-        self.ADT_encoder = ADT_Class_encoder(config.emb_dim,config.emb_ADT,config.ADT_component,config.ADT_tokens,config.encoder_head,config.encoder_layer)
+        self.RNA_Encoder = RNA_Encoder(config.emb_dim,config.emb_RNA,config.RNA_component,config.RNA_tokens,config.encoder_head,config.encoder_layer)
+        self.ADT_Encoder = ADT_Encoder(config.emb_dim,config.emb_ADT,config.ADT_component,config.ADT_tokens,config.encoder_head,config.encoder_layer)
         
         self.RNA_in_ADT_Att = CrossAttention(config.emb_dim)
         self.ADT_in_RNA_Att = CrossAttention(config.emb_dim)
@@ -141,8 +141,8 @@ class Omics_Classifier(torch.nn.Module):
         self.head = torch.nn.Linear(config.emb_dim, config.num_classes)
     def forward(self, patches1,patches2):
       
-        patches1 = self.RNA_encoder(patches1)
-        patches2 = self.ADT_encoder(patches2)
+        patches1 = self.RNA_Encoder(patches1)
+        patches2 = self.ADT_Encoder(patches2)
 
         omics_feature1 = rearrange(patches1.clone(), 't b c -> b t c')
         omics_feature1_cls = omics_feature1[:,0,:].unsqueeze(1).clone() #cls
