@@ -21,12 +21,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-##loading pretrained stage1-model
-#from stage1 import *
-#config = Config()
-#model = Omics_attention(config).to(config.device)
-#model.load_state_dict(torch.load(f'{Your Path}/scMMAE_{dataset}_pretrain_{e}epoch_best_model.pth'),strict=False)
-
 
 class Config(object):
     """para"""
@@ -214,6 +208,10 @@ train_dataset.shape,train_dataset1.shape,val_dataset.shape,val_dataset1.shape,y_
 
 
 
+##loading pretrained stage1-model
+#model = Omics_Classifier(config).to(config.device)
+#model = DataParallel(model)
+#model.load_state_dict(torch.load(f'{Your Path}/scMMAE_{dataset}_pretrain_{e}epoch_best_model.pth'),strict=False)
 
 ###########################################Training
 early_stopping_patience = 5  
@@ -224,7 +222,6 @@ lossfun = torch.nn.CrossEntropyLoss()
 acc_fn = lambda logit, label: torch.mean((logit.argmax(dim=-1) == label).float())
 
 model = Omics_Classifier(config).to(config.device)
-#model = DataParallel(model)
 if __name__ == '__main__':
     
         batch_size = config.batch_size
