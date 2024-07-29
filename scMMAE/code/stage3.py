@@ -21,11 +21,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-##loading pretrained stage1-model
-#from stage2 import *
-#config = Config()
-#model = Omics_Classifier(config).to(config.device)
-#model.load_state_dict(torch.load(f'{Your Path}/{Dataset}_finetune_best_model.pth'),strict=False)
+
 
 
 class Config(object):
@@ -155,6 +151,10 @@ train_dataloader = torch.utils.data.DataLoader(multi_modal_trian_dataset, 128, s
 val_dataloader = torch.utils.data.DataLoader(multi_modal_test_dataset, 128, shuffle=False,num_workers=0)
 
 
+##loading pretrained stage2-model
+#config = Config()
+#model = Omics_Pred(config).to(config.device)
+#model.load_state_dict(torch.load(f'{Your Path}/{Dataset}_finetune_best_model.pth'),strict=False) ##If error, becasue haed number (number of class, cell type) is different between multimodal and unimodal,you should remove the paras and weigths of head)
 ####################################Training
 early_stopping_patience = 5  
 best_val_loss = float('inf')  
