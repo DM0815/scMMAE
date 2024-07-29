@@ -37,9 +37,9 @@ class Config(object):
         self.decoder_layer = 4
         self.decoder_head = 2
         self.mask_ratio = 0.15        
-        self.omics_tokens = 4000 ##omics cells
-        self.omic_component = 400 ##channel        
-        self.emb_gene = 10
+        self.RNA_tokens = 4000 ##omics cells
+        self.RNA_component = 400 ##channel        
+        self.emb_RNA = 10
         
 
         
@@ -48,20 +48,20 @@ class Config(object):
         self.warmup_epoch = 10
 config = Config()        
 
-class Omics_Class_encoder(torch.nn.Module):
-    def __init__(self,emb_dim=64,emb_gene=10,omic_component=400,omics_tokens=4000, encoder_head=4,encoder_layer=6) -> None:
+class Omics_Encoder(torch.nn.Module):
+    def __init__(self,emb_dim=128,emb_RNA=10,RNA_component=400,RNA_tokens=4000, encoder_head=4,encoder_layer=6) -> None:
         super().__init__()
-        self.tokens = torch.nn.Sequential(torch.nn.Linear(in_features = omics_tokens, out_features = omics_tokens))
-        self.embedding = torch.nn.Sequential(torch.nn.Linear(in_features = emb_gene, out_features = emb_dim))
+        self.tokens = torch.nn.Sequential(torch.nn.Linear(in_features = RNA_tokens, out_features = RNA_tokens))
+        self.embedding = torch.nn.Sequential(torch.nn.Linear(in_features = emb_RNA, out_features = emb_dim))
         self.cls_token = torch.nn.Parameter(torch.zeros(1, 1,emb_dim))
-        self.pos_embedding = torch.nn.Parameter(torch.zeros((1, omic_component ,emb_dim)))#
+        self.pos_embedding = torch.nn.Parameter(torch.zeros((1, RNA_component ,emb_dim)))#
         self.transformer = torch.nn.Sequential(*[Block(emb_dim, encoder_head,attn_drop=0.1 ,proj_drop=0.1) for _ in range(encoder_layer)])
         self.layer_norm = torch.nn.LayerNorm(emb_dim)
 
 
     def forward(self, patches):
         patches = self.tokens(patches)
-        patches = patches.view(patches.size(0),config.omic_component,config.emb_gene)
+        patches = patches.view(patches.size(0),config.RNA_component,config.emb_RNA)
         patches = self.embedding(patches)
         patches = patches + self.pos_embedding
         patches = rearrange(patches, 'b c s -> c b s')
@@ -98,7 +98,7 @@ class CrossAttention(torch.nn.Module):
 class Omics_Pred(torch.nn.Module):
     def __init__(self, config) -> None:
         super().__init__()
-        self.omics1_encoder = Omics_Class_encoder(config.emb_dim,config.emb_gene,config.omic_component,config.omics_tokens,config.encoder_head,config.encoder_layer)
+        self.RNA_Encoder = RNA_Encoder(config.emb_dim,config.emb_RNA,config.RNA_component,config.RNA_tokens,config.encoder_head,config.encoder_layer)
 
         
         self.omics2_in_omics1_Att = CrossAttention(config.emb_dim)
@@ -106,7 +106,7 @@ class Omics_Pred(torch.nn.Module):
         self.head = torch.nn.Linear(config.emb_dim, config.num_classes)
     def forward(self, patches1):
       
-        patches1 = self.omics1_encoder(patches1)
+        patches1 = self.RNA_Encoder(patches1)
 
         omics_feature1 = rearrange(patches1.clone(), 't b c -> b t c')
         omics_feature1_cls = omics_feature1[:,0,:].unsqueeze(1).clone() #cls
